@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+
+	<head>
+
+		<title>Money</title>
+
+	</head>
+
+	<body>
+	
+		<h1>Money Authority</h1>
+
+		<h2>Create</h2>
+
+		<form method="post" action="create">
+
+			<label for="create-value">Value:</label>
+			<input id="create-value" type="text" name="value" value=""/>
+
+			<button type="submit">Create</button>
+
+		</form>
+
+		<h2>Split</h2>
+
+		<form method="post" action="split">
+
+			<fieldset>
+
+				<legend>Dollar</legend>
+
+				<label for="split-id">Identifier:</label>
+				<input id="split-id" type="text" name="id" value=""/>
+
+				<label for="split-secret">Secret:</label>
+				<input id="split-secret" type="text" name="secret" value=""/>
+
+			</fieldset>
+
+			<label for="split-value">Value:</label>
+			<input id="split-value" type="text" name="value" value=""/>
+
+			<button type="submit">Split</button>
+
+		</form>
+
+		<h2>Merge</h2>
+
+		<form method="post" action="merge">
+
+			<fieldset>
+
+				<legend>Dollar A</legend>
+
+				<label for="merge-id1">Identifier:</label>
+				<input id="merge-id1" type="text" name="id1" value=""/>
+
+				<label for="merge-secret1">Secret:</label>
+				<input id="merge-secret1" type="text" name="secret1" value=""/>
+
+			</fieldset>
+
+			<fieldset>
+
+				<legend>Dollar B</legend>
+
+				<label for="merge-id2">Identifier:</label>
+				<input id="merge-id2" type="text" name="id2" value=""/>
+
+				<label for="merge-secret2">Secret:</label>
+				<input id="merge-secret2" type="text" name="secret2" value=""/>
+
+			</fieldset>
+
+			<button type="submit">Merge</button>
+
+		</form>
+		
+		<h2>Evaluate</h2>
+
+		<form method="get" action="value">
+
+			<label for="value-id">Identifier:</label>
+			<input id="value-id" type="text" name="id" value=""/>
+
+			<button type="submit">Evaluate</button>
+
+		</form>
+
+	</body>
+
+</html>
