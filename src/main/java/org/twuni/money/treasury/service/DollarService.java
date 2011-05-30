@@ -6,8 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
+import org.hibernate.ObjectNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.twuni.money.treasury.model.Dollar;
 
+@Transactional
 public abstract class DollarService {
 
 	private static final int DEFAULT_SECURITY_BIT_LENGTH = 256;
@@ -73,7 +76,12 @@ public abstract class DollarService {
 	}
 
 	protected Dollar lookup( Dollar dollar ) {
-		Dollar actual = findById( dollar.getId() );
+		Dollar actual = null;
+		try {
+			actual = findById( dollar.getId() );
+		} catch( ObjectNotFoundException exception ) {
+			throw new IllegalArgumentException( exception.getMessage() );
+		}
 		if( actual == null || !actual.getSecret().equals( dollar.getSecret() ) ) {
 			throw new IllegalArgumentException( String.format( "Dollar %s is invalid.", dollar.getId() ) );
 		}
