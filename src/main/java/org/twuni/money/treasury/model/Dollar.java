@@ -2,33 +2,37 @@ package org.twuni.money.treasury.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Dollar {
 
+	private String treasury;
 	private String id;
 	private String secret;
 	private int worth;
 
 	public Dollar( Dollar copy ) {
-		this( copy.id, copy.worth, copy.secret );
+		this( copy.treasury, copy.id, copy.secret, copy.worth );
 	}
 
 	public Dollar() {
-		this( null, 1, null );
+		this( 1 );
 	}
 
 	public Dollar( int worth ) {
-		this( null, worth, null );
+		this.worth = worth;
+	}
+
+	public Dollar( String treasury, String id, String secret, int worth ) {
+		this.treasury = treasury;
+		this.id = id;
+		this.secret = secret;
+		this.worth = worth;
 	}
 
 	public Dollar( String id, String secret ) {
-		this( id, 0, secret );
-	}
-
-	public Dollar( String id, int worth, String secret ) {
 		this.id = id;
-		this.worth = worth;
 		this.secret = secret;
 	}
 
@@ -58,6 +62,15 @@ public class Dollar {
 			throw new IllegalArgumentException( "A dollar's worth must be greater than zero." );
 		}
 		this.worth = worth;
+	}
+
+	public void setTreasury( String treasury ) {
+		this.treasury = treasury;
+	}
+
+	@Transient
+	public String getTreasury() {
+		return treasury;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package org.twuni.money.treasury.service;
 
-import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
@@ -13,17 +12,19 @@ import org.twuni.money.treasury.model.Dollar;
 @Transactional
 public abstract class DollarService {
 
-	private static final int DEFAULT_SECURITY_BIT_LENGTH = 256;
+	private static final String TREASURY_URL = "http://home.twuni.org:8080/treasury";
 
-	private final int securityBitLength;
+	private static final int DEFAULT_ID_LENGTH = 32;
+
+	private final int idLength;
 	private final SecureRandom random = new SecureRandom();
 
 	protected DollarService() {
-		this( DEFAULT_SECURITY_BIT_LENGTH );
+		this( DEFAULT_ID_LENGTH );
 	}
 
-	protected DollarService( int securityBitLength ) {
-		this.securityBitLength = securityBitLength;
+	protected DollarService( int idLength ) {
+		this.idLength = idLength;
 	}
 
 	public Dollar create( int worth ) {
@@ -32,19 +33,30 @@ public abstract class DollarService {
 			throw new IllegalArgumentException( "A dollar's worth must be greater than zero." );
 		}
 
-		BigInteger dollarId;
-		do {
-			dollarId = BigInteger.probablePrime( securityBitLength, random );
-		} while( findById( dollarId.toString() ) != null );
+		String id = generateUniqueId( idLength );
+		String secret = generateRandomBase64String( idLength );
 
-		BigInteger secret = BigInteger.probablePrime( securityBitLength, random );
-
-		Dollar dollar = new Dollar( Base64.encodeBase64String( dollarId.toByteArray() ), worth, Base64.encodeBase64String( secret.toByteArray() ) );
+		Dollar dollar = new Dollar( TREASURY_URL, id, secret, worth );
 
 		save( dollar );
 
 		return new Dollar( dollar );
 
+	}
+
+	private String generateRandomBase64String( int length ) {
+		byte [] buffer = new byte [length];
+		random.nextBytes( buffer );
+		String result = Base64.encodeBase64String( buffer );
+		return result;
+	}
+
+	private String generateUniqueId( int length ) {
+		String id;
+		do {
+			id = generateRandomBase64String( length );
+		} while( findById( id ) != null );
+		return id;
 	}
 
 	public List<Dollar> split( Dollar original, int amount ) {

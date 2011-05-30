@@ -60,7 +60,7 @@ public class DollarController extends AbstractJsonController {
 	@RequestMapping( method = RequestMethod.GET, value = "/value" )
 	public void getDollarValue( @RequestParam String id, HttpServletResponse response ) {
 		int value = dollarService.evaluate( id );
-		sendAsJson( value, response );
+		sendAsJson( Integer.valueOf( value ), response );
 	}
 
 }
