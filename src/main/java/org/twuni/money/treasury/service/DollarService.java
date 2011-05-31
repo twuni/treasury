@@ -12,7 +12,7 @@ import org.twuni.money.treasury.model.Dollar;
 @Transactional
 public abstract class DollarService {
 
-	private static final String TREASURY_URL = "http://home.twuni.org:8080/treasury";
+	private static final String TREASURY_URL = "http://money.twuni.org:8080/treasury";
 
 	private static final int DEFAULT_ID_LENGTH = 32;
 
