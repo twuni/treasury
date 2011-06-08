@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.twuni.money.treasury.model.Dollar;
+import org.twuni.money.treasury.repository.MemoryDollarRepository;
+import org.twuni.money.treasury.service.DollarService.Configuration;
 
 public class DollarServiceTest {
 
@@ -14,7 +16,8 @@ public class DollarServiceTest {
 
 	@Before
 	public void setUp() {
-		dollarService = new MapDollarService();
+		dollarService = new DollarService();
+		dollarService.setConfiguration( new Configuration( 32, "test", new MemoryDollarRepository() ) );
 	}
 
 	@Test

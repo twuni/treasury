@@ -12,6 +12,12 @@
 >
 
 	<context:component-scan base-package="org.twuni.money.treasury"/>
+	
+	<bean class="org.twuni.money.treasury.service.DollarService.Configuration">
+		<constructor-arg index="0" value="32"/>
+		<constructor-arg index="1" value="money.twuni.org"/>
+		<constructor-arg index="2" ref="hibernateDollarRepository"/>
+	</bean>
 
     <bean id="dollarService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
     	<property name="transactionManager" ref="transactionManager"/>
@@ -21,7 +27,7 @@
     		</props>
     	</property>
     	<property name="target">
-    		<bean class="org.twuni.money.treasury.service.HibernateDollarService"/>
+    		<bean class="org.twuni.money.treasury.service.DollarService.Default"/>
     	</property>
     </bean>
 

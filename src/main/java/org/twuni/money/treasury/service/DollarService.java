@@ -6,37 +6,56 @@ import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.twuni.money.treasury.model.Dollar;
+import org.twuni.money.treasury.repository.Repository;
 
 @Transactional
-public abstract class DollarService {
+public class DollarService {
 
-	private static final String TREASURY_URL = "http://money.twuni.org:8080/treasury";
-
-	private static final int DEFAULT_ID_LENGTH = 32;
-
-	private final int idLength;
-	private final SecureRandom random = new SecureRandom();
-
-	protected DollarService() {
-		this( DEFAULT_ID_LENGTH );
+	@Service
+	public static class Default extends DollarService {
 	}
 
-	protected DollarService( int idLength ) {
-		this.idLength = idLength;
+	public static class Configuration {
+
+		private int idLength;
+		private String treasury;
+		private Repository<String, Dollar> repository;
+
+		public Configuration( int idLength, String treasury, Repository<String, Dollar> repository ) {
+			this.idLength = idLength;
+			this.treasury = treasury;
+			this.repository = repository;
+		}
+
+	}
+
+	@Autowired
+	private Configuration configuration;
+
+	private final SecureRandom random = new SecureRandom();
+
+	public void setConfiguration( Configuration configuration ) {
+		this.configuration = configuration;
 	}
 
 	public Dollar create( int worth ) {
+
+		if( configuration == null ) {
+			throw new IllegalStateException( "The service has not yet been configured." );
+		}
 
 		if( worth <= 0 ) {
 			throw new IllegalArgumentException( "A dollar's worth must be greater than zero." );
 		}
 
-		String id = generateUniqueId( idLength );
-		String secret = generateRandomBase64String( idLength );
+		String id = generateUniqueId( configuration.idLength );
+		String secret = generateRandomBase64String( configuration.idLength );
 
-		Dollar dollar = new Dollar( TREASURY_URL, id, secret, worth );
+		Dollar dollar = new Dollar( configuration.treasury, id, secret, worth );
 
 		save( dollar );
 
@@ -100,10 +119,16 @@ public abstract class DollarService {
 		return actual;
 	}
 
-	protected abstract Dollar findById( String dollarId );
+	private void delete( Dollar dollar ) {
+		configuration.repository.delete( dollar );
+	}
 
-	protected abstract void save( Dollar dollar );
+	private void save( Dollar dollar ) {
+		configuration.repository.save( dollar );
+	}
 
-	protected abstract void delete( Dollar dollar );
+	private Dollar findById( String id ) {
+		return configuration.repository.findById( id );
+	}
 
 }
