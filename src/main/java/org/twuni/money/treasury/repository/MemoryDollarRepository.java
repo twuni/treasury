@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.twuni.money.treasury.model.Dollar;
 
+@org.springframework.stereotype.Repository
 public class MemoryDollarRepository implements Repository<String, Dollar> {
 
 	private final Map<String, Dollar> dollars = new HashMap<String, Dollar>();

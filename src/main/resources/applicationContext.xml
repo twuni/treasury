@@ -13,12 +13,6 @@
 
 	<context:component-scan base-package="org.twuni.money.treasury"/>
 	
-	<bean class="org.twuni.money.treasury.service.DollarService.Configuration">
-		<constructor-arg index="0" value="32"/>
-		<constructor-arg index="1" value="money.twuni.org"/>
-		<constructor-arg index="2" ref="hibernateDollarRepository"/>
-	</bean>
-
     <bean id="dollarService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
     	<property name="transactionManager" ref="transactionManager"/>
     	<property name="transactionAttributes">
@@ -37,13 +31,6 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver"/>
-		<property name="url" value="jdbc:hsqldb:file:data/money"/>
-		<property name="username" value="SA"/>
-		<property name="password" value=""/>
-	</bean>
-
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="packagesToScan" value="org.twuni.money.treasury.model"/>
@@ -54,5 +41,7 @@
 			</props>
 		</property>
 	</bean>
+	
+	<import resource="treasury.xml"/>
 	
 </beans>
