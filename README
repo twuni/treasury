@@ -3,11 +3,11 @@ Quick Start
 
 1. Run `mvn clean package' from the base directory of this project.
 2. Move the .war file in the /target folder to your Tomcat /webapps directory and rename it to treasury.war.
-3. Create an empty text file in your Tomcat /lib directory named environment.xml.
-4. Copy the sample environment.xml file (see below) into that new file, making any necessary modifications.
+3. Create an empty text file in your Tomcat /lib directory named treasury.xml.
+4. Copy the sample treasury.xml file (see below) into that new file, making any necessary modifications.
 5. Launch Tomcat.
 
-Sample environment.xml file
+Sample treasury.xml file
 ===========================
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,7 +45,7 @@ Sample environment.xml file
 Next Steps
 ==========
 
-1. Make sure that your treasury is accessible via the domain name you configured in environment.xml.
+1. Make sure that your treasury is accessible via the domain name you configured in treasury.xml.
 2. You should host your treasury exclusively via HTTPS on port 443 using a professionally-signed certificate.
 3. You should throttle requests to your treasury to help prevent brute force and DoS attacks.
 4. You should configure a more reliable database connection than the default one.
