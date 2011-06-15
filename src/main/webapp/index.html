@@ -4,6 +4,33 @@
 	<head>
 
 		<title>Treasury</title>
+		
+		<style type="text/css">
+		
+			form {
+				border-width: 1px 0;
+				padding: 1em 0;
+				border-color: #CCCCCC;
+				border-style: solid;
+			}
+
+			form .response {
+				margin: 1em 1em 1em 2em;
+				padding: 1em;
+				background-color: #F0F0F0;
+				border: solid 1px #CCCCCC;
+				color: #333333;
+			}
+			
+			form .response canvas {
+				background-color: #FFFFFF;
+				color: #000000;
+				padding: 30px;
+				margin: 0 auto;
+				display: block;
+			}
+
+		</style>
 
 	</head>
 
@@ -13,18 +40,20 @@
 
 		<h2>Create</h2>
 
-		<form method="post" action="create">
+		<form method="post" action="treasury/create">
 
 			<label for="create-value">Value:</label>
 			<input id="create-value" type="text" name="value" value=""/>
 
 			<button type="submit">Create</button>
+			
+			<div class="response"></div>
 
 		</form>
 
 		<h2>Split</h2>
 
-		<form method="post" action="split">
+		<form method="post" action="treasury/split">
 
 			<fieldset>
 
@@ -43,11 +72,13 @@
 
 			<button type="submit">Split</button>
 
+			<div class="response"></div>
+
 		</form>
 
 		<h2>Merge</h2>
 
-		<form method="post" action="merge">
+		<form method="post" action="treasury/merge">
 
 			<fieldset>
 
@@ -75,18 +106,27 @@
 
 			<button type="submit">Merge</button>
 
+			<div class="response"></div>
+
 		</form>
 		
 		<h2>Evaluate</h2>
 
-		<form method="get" action="value">
+		<form method="get" action="treasury/value">
 
 			<label for="value-id">Identifier:</label>
 			<input id="value-id" type="text" name="id" value=""/>
 
 			<button type="submit">Evaluate</button>
 
+			<div class="response"></div>
+
 		</form>
+
+		<script src="js/lib/jquery-1.5.min.js"></script> 
+		<script src="js/lib/jquery.qrcode.min.js"></script>
+		<script src="js/lib/json2.js"></script>
+		<script src="js/treasury.js"></script>
 
 	</body>
 
