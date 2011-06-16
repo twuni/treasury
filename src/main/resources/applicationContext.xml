@@ -21,7 +21,7 @@
     		</props>
     	</property>
     	<property name="target">
-    		<bean class="org.twuni.money.treasury.LocalTreasury.Default"/>
+    		<bean class="org.twuni.money.treasury.service.TreasuryService.Default"/>
     	</property>
     </bean>
 
