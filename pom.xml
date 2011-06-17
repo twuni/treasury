@@ -5,7 +5,7 @@
 
 	<groupId>org.twuni.money</groupId>
 	<artifactId>treasury</artifactId>
-	<version>0.1.2-SNAPSHOT</version>
+	<version>0.2.0</version>
 	<packaging>war</packaging>
 
 	<build>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.twuni.money</groupId>
 			<artifactId>cash-api</artifactId>
-			<version>0.1.2-SNAPSHOT</version>
+			<version>0.2.0</version>
 		</dependency>
 
 		<dependency>
