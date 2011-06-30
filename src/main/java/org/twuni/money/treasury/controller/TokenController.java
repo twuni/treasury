@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -21,14 +22,14 @@ import com.google.gson.Gson;
 
 @Controller
 public class TokenController {
-	
+
 	private final Logger log = LoggerFactory.getLogger( getClass() );
 
 	@Autowired
 	private Treasury treasury;
 
 	@RequestMapping( method = RequestMethod.POST, value = "/merge" )
-	public void merge( @RequestParam final String id1, @RequestParam final String secret1, @RequestParam final String id2, @RequestParam final String secret2, HttpServletResponse response ) {
+	public void merge( @RequestParam final String id1, @RequestParam final String secret1, @RequestParam final String id2, @RequestParam final String secret2, HttpServletRequest request, HttpServletResponse response ) {
 
 		Token a = new SimpleToken( id1, secret1 );
 		Token b = new SimpleToken( id2, secret2 );
@@ -37,17 +38,17 @@ public class TokenController {
 
 			Token token = treasury.merge( a, b );
 
-			sendAsJson( token, response );
+			sendAsJson( token, request, response );
 
 		} catch( IllegalArgumentException exception ) {
-			log.info( String.format( "Error merging token: %s", exception.getMessage() ) );
+			log.info( String.format( "[%s] Error merging token: %s", request.getRemoteAddr(), exception.getMessage() ) );
 			response.setStatus( 400 );
 		}
 
 	}
 
 	@RequestMapping( method = RequestMethod.POST, value = "/split" )
-	public void split( @RequestParam final String id, @RequestParam final String secret, @RequestParam int value, HttpServletResponse response ) {
+	public void split( @RequestParam final String id, @RequestParam final String secret, @RequestParam int value, HttpServletRequest request, HttpServletResponse response ) {
 
 		Token token = new SimpleToken( id, secret );
 
@@ -55,27 +56,27 @@ public class TokenController {
 
 			Set<Token> tokens = treasury.split( token, value );
 
-			sendAsJson( tokens, response );
+			sendAsJson( tokens, request, response );
 
 		} catch( IllegalArgumentException exception ) {
-			log.info( String.format( "Error splitting token: %s", exception.getMessage() ) );
+			log.info( String.format( "[%s] Error splitting token: %s", request.getRemoteAddr(), exception.getMessage() ) );
 			response.setStatus( 400 );
 		}
 
 	}
 
 	@RequestMapping( method = RequestMethod.GET, value = "/value" )
-	public void evaluate( @RequestParam String id, HttpServletResponse response ) {
+	public void evaluate( @RequestParam String id, HttpServletRequest request, HttpServletResponse response ) {
 
 		Token token = new SimpleToken( id, null );
 
 		int value = treasury.getValue( token );
 
-		sendAsJson( Integer.valueOf( value ), response );
+		sendAsJson( Integer.valueOf( value ), request, response );
 
 	}
 
-	private <T> void sendAsJson( T object, HttpServletResponse response ) {
+	private <T> void sendAsJson( T object, HttpServletRequest request, HttpServletResponse response ) {
 
 		try {
 
@@ -87,7 +88,7 @@ public class TokenController {
 			writer.close();
 
 		} catch( IOException exception ) {
-			log.warn( String.format( "Error sending response: %s", exception.getMessage() ) );
+			log.warn( String.format( "[%s] Error sending response: %s", request.getRemoteAddr(), exception.getMessage() ) );
 		}
 
 	}

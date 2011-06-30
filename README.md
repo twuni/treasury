@@ -10,9 +10,9 @@ Quick Start
 Next Steps
 ==========
 
-1. Make sure that your treasury is accessible via the domain name you configured in treasury.xml.
+1. Make sure that your treasury is accessible via the domain name you configured in treasury.properties.
 2. You should host your treasury exclusively via HTTPS on port 443 using a professionally-signed certificate.
-3. You should throttle requests to your treasury to help prevent brute force and DoS attacks.
+3. You should throttle requests to your treasury to help prevent brute force and DDoS attacks.
 4. You should configure a more reliable database connection than the default one.
 5. You should run multiple instances of your treasury and feed all requests through a load balancer.
 6. You should reject unauthorized calls to the Create API.
