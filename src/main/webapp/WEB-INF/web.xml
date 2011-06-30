@@ -13,6 +13,11 @@
 
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
+		<url-pattern>/create</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
 		<url-pattern>/merge</url-pattern>
 	</servlet-mapping>
 
