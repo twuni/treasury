@@ -14,7 +14,7 @@
 		<url>scm:git:https://twuni@github.com/twuni/treasury.git</url>
 	</scm>
 	
-	<name>Treasury | Digital Cash</name>
+	<name>Treasury</name>
 	<description>This project implements the Treasury REST API component of the Digital Cash specification.</description>
 
 	<build>
