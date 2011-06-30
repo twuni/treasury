@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,14 @@ import com.google.gson.Gson;
 
 @Controller
 public class TokenController {
+	
+	private final Logger log = LoggerFactory.getLogger( getClass() );
 
 	@Autowired
 	private Treasury treasury;
 
 	@RequestMapping( method = RequestMethod.POST, value = "/merge" )
-	public void mergeDollars( @RequestParam final String id1, @RequestParam final String secret1, @RequestParam final String id2, @RequestParam final String secret2, HttpServletResponse response ) {
+	public void merge( @RequestParam final String id1, @RequestParam final String secret1, @RequestParam final String id2, @RequestParam final String secret2, HttpServletResponse response ) {
 
 		Token a = new SimpleToken( id1, secret1 );
 		Token b = new SimpleToken( id2, secret2 );
@@ -36,13 +40,14 @@ public class TokenController {
 			sendAsJson( token, response );
 
 		} catch( IllegalArgumentException exception ) {
+			log.info( String.format( "Error merging token: %s", exception.getMessage() ) );
 			response.setStatus( 400 );
 		}
 
 	}
 
 	@RequestMapping( method = RequestMethod.POST, value = "/split" )
-	public void splitDollar( @RequestParam final String id, @RequestParam final String secret, @RequestParam int value, HttpServletResponse response ) {
+	public void split( @RequestParam final String id, @RequestParam final String secret, @RequestParam int value, HttpServletResponse response ) {
 
 		Token token = new SimpleToken( id, secret );
 
@@ -53,13 +58,14 @@ public class TokenController {
 			sendAsJson( tokens, response );
 
 		} catch( IllegalArgumentException exception ) {
+			log.info( String.format( "Error splitting token: %s", exception.getMessage() ) );
 			response.setStatus( 400 );
 		}
 
 	}
 
 	@RequestMapping( method = RequestMethod.GET, value = "/value" )
-	public void getDollarValue( @RequestParam String id, HttpServletResponse response ) {
+	public void evaluate( @RequestParam String id, HttpServletResponse response ) {
 
 		Token token = new SimpleToken( id, null );
 
@@ -81,7 +87,7 @@ public class TokenController {
 			writer.close();
 
 		} catch( IOException exception ) {
-			System.err.println( exception.getMessage() );
+			log.warn( String.format( "Error sending response: %s", exception.getMessage() ) );
 		}
 
 	}
