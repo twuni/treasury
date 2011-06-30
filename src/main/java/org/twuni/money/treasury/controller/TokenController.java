@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.twuni.money.common.SimpleToken;
 import org.twuni.money.common.Token;
-import org.twuni.money.common.TreasuryService;
+import org.twuni.money.common.Treasury;
 
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 public class TokenController {
@@ -26,8 +26,8 @@ public class TokenController {
 	private final Logger log = LoggerFactory.getLogger( getClass() );
 
 	@Autowired
-	private TreasuryService treasury;
-	
+	private Treasury treasury;
+
 	@RequestMapping( method = RequestMethod.POST, value = "/create" )
 	public void create( @RequestParam final int value, HttpServletRequest request, HttpServletResponse response ) {
 		try {
@@ -86,7 +86,7 @@ public class TokenController {
 
 	private <T> void sendAsJson( T object, HttpServletRequest request, HttpServletResponse response ) {
 		try {
-			String json = new Gson().toJson( object );
+			String json = new GsonBuilder().disableHtmlEscaping().create().toJson( object );
 			response.setContentType( "application/json" );
 			Writer writer = response.getWriter();
 			writer.write( json );
@@ -98,8 +98,8 @@ public class TokenController {
 	}
 
 	private void failGracefully( HttpServletRequest request, HttpServletResponse response, Exception exception ) {
-	    log.error( String.format( "[%s] %s", request.getRemoteAddr(), exception.getMessage() ) );
-	    response.setStatus( 500 );
-    }
+		log.error( String.format( "[%s] %s", request.getRemoteAddr(), exception.getMessage() ) );
+		response.setStatus( 500 );
+	}
 
 }

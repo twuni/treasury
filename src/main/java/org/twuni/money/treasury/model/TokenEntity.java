@@ -4,9 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.twuni.money.common.SimpleToken;
+import org.twuni.money.common.Token;
 
 @Entity( name = "token" )
 public class TokenEntity extends SimpleToken {
+
+	public TokenEntity() {
+	}
+
+	public TokenEntity( Token token ) {
+		super( token );
+	}
 
 	@Id
 	@Override

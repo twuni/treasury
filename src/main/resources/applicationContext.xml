@@ -44,7 +44,7 @@
 	<bean class="org.twuni.money.treasury.service.TreasuryService.Configuration">
 		<constructor-arg index="0" value="${treasury.id.length}"/>
 		<constructor-arg index="1" value="${treasury.domain}"/>
-		<constructor-arg index="2" ref="hibernateTokenRepository"/>
+		<constructor-arg index="2" ref="tokenRepository"/>
 	</bean>
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

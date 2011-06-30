@@ -11,7 +11,6 @@ import org.twuni.money.common.Repository;
 import org.twuni.money.common.Token;
 import org.twuni.money.treasury.model.TokenEntity;
 
-@org.springframework.stereotype.Repository
 public class HibernateTokenRepository implements Repository<String, Token> {
 
 	@Autowired
