@@ -5,7 +5,7 @@
 
 	<groupId>org.twuni.money</groupId>
 	<artifactId>treasury</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 	<packaging>war</packaging>
 
 	<build>
