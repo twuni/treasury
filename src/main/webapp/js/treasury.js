@@ -1,13 +1,13 @@
 $( function() {
 
-    $( "form[action='treasury/create'], form[action='treasury/merge']" ).submit( function( event ) {
+    $( "form[action='/treasury/create'], form[action='/treasury/merge']" ).submit( function( event ) {
         
         var form = $(this);
 
         jQuery.post( $(this).attr( "action" ), $(this).serialize(), function( dollar ) {
 
             $( ".response", form ).empty().append( $("<div>").text( dollar ) ).qrcode( {
-                typeNumber: 8,
+                typeNumber: 10,
                 correctLevel: 0,
                 text: dollar
             } );
@@ -18,7 +18,7 @@ $( function() {
         
     } );
 
-    $( "form[action='treasury/value']" ).submit( function( event ) {
+    $( "form[action='/treasury/value']" ).submit( function( event ) {
         
         var form = $(this);
 
@@ -30,7 +30,7 @@ $( function() {
         
     } );
 
-    $( "form[action='treasury/split']" ).submit( function( event ) {
+    $( "form[action='/treasury/split']" ).submit( function( event ) {
         
         var form = $(this);
 
@@ -41,7 +41,7 @@ $( function() {
             for( var i = 0; i < dollars.length; i++ ) {
                 var dollar = JSON.stringify( dollars[i] );
                 $( ".response", form ).append( $("<div>").text( dollar ) ).qrcode( {
-                    typeNumber: 8,
+                    typeNumber: 10,
                     correctLevel: 0,
                     text: dollar
                 } );
