@@ -3,7 +3,7 @@ Quick Start
 
 1. Run `mvn clean package` from the base directory of this project.
 2. Move the .war file in the **/target** folder to your Tomcat **/webapps** directory and rename it to **treasury.war**.
-3. Copy the **treasury.properties.example** file into your Tomcat `/lib` directory and rename it to **treasury.properties**.
+3. Copy the **treasury.properties.example** file into your Tomcat **/lib** directory and rename it to **treasury.properties**.
 4. Review **treasury.properties** and make any necessary modifications.
 5. Place libraries containing the JDBC drivers configured in **treasury.properties** into your Tomcat **/lib** directory.
 6. Launch Tomcat.
