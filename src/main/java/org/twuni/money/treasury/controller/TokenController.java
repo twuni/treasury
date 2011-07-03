@@ -38,7 +38,7 @@ public class TokenController {
 			sendAsJson( token, request, response );
 		} catch( IllegalAccessError exception ) {
 			log.warn( String.format( "[%s] Illegal attempt to create token.", request.getRemoteAddr() ) );
-			response.setStatus( 401 );
+			response.setStatus( 403 );
 		} catch( Exception exception ) {
 			failGracefully( request, response, exception );
 		}
