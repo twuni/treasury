@@ -7,15 +7,23 @@
 	<artifactId>treasury</artifactId>
 	<version>0.2.2-SNAPSHOT</version>
 	<packaging>war</packaging>
-	
+
+	<name>Treasury</name>
+	<description>This project implements the Treasury REST API component of the Digital Cash specification.</description>
+
 	<scm>
 		<developerConnection>scm:git:ssh:git@github.com:twuni/treasury.git</developerConnection>
 		<connection>scm:git:ssh:git@github.com:twuni/treasury.git</connection>
 		<url>scm:git:https://twuni@github.com/twuni/treasury.git</url>
 	</scm>
-	
-	<name>Treasury</name>
-	<description>This project implements the Treasury REST API component of the Digital Cash specification.</description>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<build>
 
